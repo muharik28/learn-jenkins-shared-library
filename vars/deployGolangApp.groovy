@@ -19,7 +19,7 @@ def call(Map config = [:]) {
                 }
             }
             
-            stage('Build & Deploy') {
+            stage('Build') {
                 steps {
                     script {
                         echo "Building application: ${config.appName ?: 'App'}"
