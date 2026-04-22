@@ -1,14 +1,6 @@
-def call(Closure body) {
-    def config = [:]
-    body.resolveStrategy = Closure.DELEGATE_FIRST
-    body.delegate = config
-    body()
-    call(config)
-}
-
 def call(Map config = [:]) {
     pipeline {
-        agent none
+        agent any
         
         parameters {
             string(name: 'BRANCH', defaultValue: 'main', description: 'Select branch to deploy')
