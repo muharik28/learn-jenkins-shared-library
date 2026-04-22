@@ -3,7 +3,7 @@ def call(Map config = [:]) {
         agent any
         
         parameters {
-            string(name: 'BRANCH', defaultValue: 'main', description: 'Select branch to deploy')
+            choice(name: 'BRANCH', choices: ['main'], description: 'Select branch to deploy')
         }
 
         stages {
