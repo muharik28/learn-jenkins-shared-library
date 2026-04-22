@@ -3,7 +3,7 @@ def call(Map config = [:]) {
         agent any
         
         parameters {
-            gitParameter(name: 'BRANCH', type: 'PT_BRANCH', defaultValue: 'main', description: 'Select branch to deploy from repository', listSize: '1')
+            gitParameter(type: 'PT_BRANCH', name: 'BRANCH', branchFilter: 'origin/(.*)', defaultValue: 'main', description: 'Select branch to deploy from repository', selectedValue: 'TOP', sortMode: 'DESCENDING_SMART', tagFilter: '*', listSize: '1')
         }
 
         stages {
@@ -12,7 +12,7 @@ def call(Map config = [:]) {
                     script {
                         // Use the branch from parameters
                         checkout([$class: 'GitSCM', 
-                            branches: [[name: "*/${params.BRANCH}"]], 
+                            branches: [[name: "${params.BRANCH}"]], 
                             userRemoteConfigs: [[url: config.repoUrl ?: 'https://github.com/muharik28/vibe-coding-bun-router']]
                         ])
                     }
