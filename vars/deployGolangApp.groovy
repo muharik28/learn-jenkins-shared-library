@@ -19,12 +19,31 @@ def call(Map config = [:]) {
                 }
             }
             
-            stage('Build') {
+            stage('Build & Deploy') {
                 steps {
                     script {
                         echo "Building application: ${config.appName ?: 'App'}"
-                        // Using docker-compose as per project structure
-                        sh "docker compose up -d --build"
+                        
+                        sh '''
+                            # Pengecekan apakah command docker ada di dalam Jenkins container
+                            if ! command -v docker &> /dev/null; then
+                                echo "Docker CLI tidak ditemukan! Mengunduh versi static sementara..."
+                                curl -fsSLO https://download.docker.com/linux/static/stable/x86_64/docker-24.0.9.tgz
+                                tar xzvf docker-24.0.9.tgz
+                                export PATH=$PATH:$(pwd)/docker
+                            fi
+
+                            # Pengecekan apakah command docker-compose ada
+                            if ! command -v docker-compose &> /dev/null && ! docker compose version &> /dev/null; then
+                                echo "Docker Compose tidak ditemukan! Mengunduh versi standalone..."
+                                curl -SL https://github.com/docker/compose/releases/download/v2.26.1/docker-compose-linux-x86_64 -o docker-compose
+                                chmod +x docker-compose
+                                export PATH=$PATH:$(pwd)
+                            fi
+
+                            # Menjalankan build dan deploy menggunakan standalone docker-compose
+                            docker-compose up -d --build
+                        '''
                     }
                 }
             }
