@@ -1,6 +1,5 @@
 def call(Map config = [:]) {
     pipeline {
-        agent any
 
         parameters {
             gitParameter(type: 'PT_BRANCH', name: 'BRANCH', branchFilter: 'origin/(.*)', defaultValue: 'main', description: 'Select branch to deploy from repository', selectedValue: 'TOP', sortMode: 'DESCENDING_SMART', tagFilter: '*', listSize: '1')
@@ -8,6 +7,12 @@ def call(Map config = [:]) {
 
         stages {
             stage('Checkout') {
+                agent {
+                    node {
+                        label 'linux'
+                    }
+                }
+
                 steps {
                     script {
                         // Use the branch from parameters
@@ -20,6 +25,12 @@ def call(Map config = [:]) {
             }
 
             stage('Build') {
+                agent {
+                    node {
+                        label 'linux'
+                    }
+                }
+
                 steps {
                     script {
                         echo "Building application: ${config.appName ?: 'App'}"
@@ -63,6 +74,12 @@ def call(Map config = [:]) {
             }
 
             stage('Deploy') {
+                agent {
+                    node {
+                        label 'linux'
+                    }
+                }
+
                 steps {
                     script {
                         echo 'Deploying application successful'
