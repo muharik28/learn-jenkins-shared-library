@@ -8,9 +8,7 @@ def call(Closure body) {
 
 def call(Map config = [:]) {
     pipeline {
-        agent {
-            any true
-        }
+        agent none
         
         parameters {
             string(name: 'BRANCH', defaultValue: 'main', description: 'Select branch to deploy')
