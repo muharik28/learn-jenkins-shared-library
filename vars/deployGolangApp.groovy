@@ -3,7 +3,7 @@ def call(Map config = [:]) {
         agent any
         
         parameters {
-            gitParameter(name: 'BRANCH', type: 'PT_BRANCH', defaultValue: 'main', description: 'Select branch to deploy from repository')
+            gitParameter(name: 'BRANCH', type: 'PT_BRANCH', defaultValue: 'main', description: 'Select branch to deploy from repository', listSize: '1')
         }
 
         stages {
