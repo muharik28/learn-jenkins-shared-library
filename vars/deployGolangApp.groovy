@@ -8,11 +8,6 @@ def call(Map config = [:]) {
 
         stages {
             stage('Checkout') {
-                agent {
-                    node {
-                        label 'linux'
-                    }
-                }
 
                 steps {
                     script {
@@ -26,11 +21,6 @@ def call(Map config = [:]) {
             }
 
             stage('Build') {
-                agent {
-                    node {
-                        label 'linux'
-                    }
-                }
 
                 steps {
                     script {
@@ -75,11 +65,6 @@ def call(Map config = [:]) {
             }
 
             stage('Deploy') {
-                agent {
-                    node {
-                        label 'linux'
-                    }
-                }
 
                 steps {
                     script {
