@@ -1,5 +1,6 @@
 def call(Map config = [:]) {
     pipeline {
+        agent none
 
         parameters {
             gitParameter(type: 'PT_BRANCH', name: 'BRANCH', branchFilter: 'origin/(.*)', defaultValue: 'main', description: 'Select branch to deploy from repository', selectedValue: 'TOP', sortMode: 'DESCENDING_SMART', tagFilter: '*', listSize: '1')
